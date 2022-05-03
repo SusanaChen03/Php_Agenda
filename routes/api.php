@@ -17,9 +17,23 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+//localhost/api/contacts
 Route::get('/contacts', function() {
     return 'GET ALL CONTACTS';
 });
 
+Route::get('/contact/{id}', function($id) {
+    return 'GET CONTACT BY ID->'. $id;
+});
 
+Route::post('/contact', function () {
+    return 'CREATE CONTACT BY ID';
+});
+
+Route::patch('/contact/{id}', function($id) {
+    return 'PATCH CONTACT BY ID'. $id;
+});
+
+Route::delete('/contact/{id}', function($id) {
+    return 'DELETE CONTACT'. $id;
+});
