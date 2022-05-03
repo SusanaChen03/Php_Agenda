@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 //localhost/api/contacts
-Route::get('/contacts', function() {
+Route::get('/contacts', function(Request $request) {   //localhost:8000/api/contacts/author=daniel  te devuelve daniel
+    dump($request->query('author'));  //las querys se utilizan para los filtros
     return 'GET ALL CONTACTS';
 });
 
@@ -27,8 +28,10 @@ Route::get('/contact/{id}', function($id) {
 });
 
 Route::post('/contact', function (Request $request) {
-    dump($request-> all());    //pasa el post en un array  //dump hay que borrarlas en produccion 
-    // dd()  haz el dump y muere
+    dump($request-> all()['name']);    //pasa el post en un array  //dump hay que borrarlas en produccion //name: accediendo a la propiedad  
+    // dd($request->name);      haz el dump y muere
+    // dump($request->input('name))    //los tres hace lo mismo 
+ 
     return 'CREATE CONTACT BY ID';
 });
 
@@ -37,5 +40,5 @@ Route::patch('/contact/{id}', function($id) {
 });
 
 Route::delete('/contact/{id}', function($id) {
-    return 'DELETE CONTACT'. $id;
+    return 'DELETE CONTACT BY ID'. $id;
 });
