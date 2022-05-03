@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up()   //metodo up cuando hacemos el migratee
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('isActive')->default(true);     //activo o no //si ya esta hecha la migracion. se borra y se vuelve  
             $table->rememberToken();
             $table->timestamps();
         });
@@ -29,7 +30,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down()   //metodo down para hacer el rollback
     {
         Schema::dropIfExists('users');
     }
