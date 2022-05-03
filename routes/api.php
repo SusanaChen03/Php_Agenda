@@ -26,7 +26,9 @@ Route::get('/contact/{id}', function($id) {
     return 'GET CONTACT BY ID->'. $id;
 });
 
-Route::post('/contact', function () {
+Route::post('/contact', function (Request $request) {
+    dump($request-> all());    //pasa el post en un array  //dump hay que borrarlas en produccion 
+    // dd()  haz el dump y muere
     return 'CREATE CONTACT BY ID';
 });
 
