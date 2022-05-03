@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,27 +19,39 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 //localhost/api/contacts
-Route::get('/contacts', function(Request $request) {   //localhost:8000/api/contacts/author=daniel  te devuelve daniel
-    dump($request->query('author'));  //las querys se utilizan para los filtros
-    return 'GET ALL CONTACTS';
-});
 
-Route::get('/contact/{id}', function($id) {
-    return 'GET CONTACT BY ID->'. $id;
-});
 
-Route::post('/contact', function (Request $request) {
-    dump($request-> all()['name']);    //pasa el post en un array  //dump hay que borrarlas en produccion //name: accediendo a la propiedad  
-    // dd($request->name);      haz el dump y muere
-    // dump($request->input('name))    //los tres hace lo mismo 
+//CONTACTS
+
+// Route::get('/contacts', function(Request $request) {   //localhost:8000/api/contacts/author=daniel  te devuelve daniel
+//     dump($request->query('author'));  //las querys se utilizan para los filtros
+//     return 'GET ALL CONTACTS';
+// });
+
+
+Route::get('/contacts',[ContactController::class,'getAllContacts']);
+
+
+Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
+
+
+
+// Route::post('/contact', function (Request $request) {
+//     dump($request-> all()['name']);    //pasa el post en un array  //dump hay que borrarlas en produccion //name: accediendo a la propiedad  
+//     // dd($request->name);      haz el dump y muere
+//     // dump($request->input('name))    //los tres hace lo mismo 
  
-    return 'CREATE CONTACT BY ID';
-});
+//     return 'CREATE CONTACT BY ID';
+// });
 
-Route::patch('/contact/{id}', function($id) {
-    return 'PATCH CONTACT BY ID'. $id;
-});
+Route::post('/contact', [ContactController::class, 'createContact']);
 
-Route::delete('/contact/{id}', function($id) {
-    return 'DELETE CONTACT BY ID'. $id;
-});
+Route::patch('/contact/{id}', [ContactController::class, 'patchContactById']);
+
+Route::delete('/contact/{id}', [ContactController::class, 'deleteContactById']);
+
+
+//Route::get('/contact', [])->middleware
+
+//Route::resource('photos', PhotoController::class)   tipo --resource
+ 
