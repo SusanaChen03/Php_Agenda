@@ -3,17 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
     public function getAllContacts()
     {
-        return 'GET ALL CONTACTS CONTROLLER';
+        $contacts = DB::table('contacts')->where('user_id',1)->get()->toArray();//get nos trae una coleccion y toArray nos lo convierte en array
+        //where para barreras para entrar where('user', 'LIKE'(que contenga 1)'='(que sea igual a 1))
+        dump($contacts);
+
+        //return 'GET ALL CONTACTS CONTROLLER';  //console.log get all contacts controller.
+        return $contacts;
     }
 
     public function getContactById($id)
     {
-        return 'GET CONTACT BY ID->'. $id;
+        
+        $contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->get();  //sacar los contactos que a creado ese usuario(user_id, quien este logeado, con un token)
+        //$contact = DB::table('contacts')->where('user_id', 1)->find($id);    nos devuelve lo mismo.
+        
+        //return 'GET CONTACT BY ID->'. $id;
+        return $contact;
     }
 
     public function createContact(Request $request)
