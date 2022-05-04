@@ -84,10 +84,37 @@ class ContactController extends Controller
 
     }
 
-    public function patchContactById($id)
+    public function patchContactById(Request $request, $id)
     {
-        return 'PATCH CONTACT BY ID'. $id;
+        $contact = Contact::where('user_id',$id)->where('user_id',1)->first();
+
+        if(empty($contact)){
+            return response()->json(["error"=> "contact not exists"], 404);
+        };
+
+        if(isset($request->name)){
+            $contact->name = $request->name;
+        }
+        if(isset($request->surname)){
+            $contact->surname = $request->surname;
+        }
+        if(isset($request->email)){
+            $contact->email = $request->email;
+        }
+        if(isset($request->phone_number)){
+            $contact->phone_number = $request->phone_number;
+        }
+        if(isset($request->user_id)){
+            $contact->user_id = $request->user_id;
+        }
+
+        $contact->save();
+
+        //return 'UPDATE CONTACT BY ID'. $id;
+        //return ["data"=>$contact, "success"=>'Contact updated'];
+        return response()->json(["data"=>$contact, "success"=>'Contact updated'], 200);
     }
+
 
     public function deleteContactById($id)
     {
