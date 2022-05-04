@@ -1,5 +1,9 @@
 <?php
 //  crear datos aleatorios en nuestra base de datos
+//faker: libreria
+//str: libreria
+
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;

@@ -1,5 +1,5 @@
 <?php
-//creacion de seeders poe excelencia
+//creacion de seeders por excelencia
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+         //\App\Models\User::factory(10)->create();
+
+         $this->call([
+             ContactSeeder::class   //trae el array de datos de contact 
+         ]);
     }
 }
