@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
@@ -66,6 +67,19 @@ class ContactController extends Controller
 
     public function createContact(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'phone_number' => 'required|string',
+            'email' => 'required|email',
+
+        ]);
+ 
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        };
+
+
         $newContact = new Contact();  //instanciamos el modelo
 
         //$userId = auth()->user()->id;
@@ -86,6 +100,8 @@ class ContactController extends Controller
 
     public function patchContactById(Request $request, $id)
     {
+     
+
         $contact = Contact::where('user_id',$id)->where('user_id',1)->first();
 
         if(empty($contact)){
