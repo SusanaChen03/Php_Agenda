@@ -40,6 +40,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/contacts',[ContactController::class,'getAllContacts']);
 
+Route::get('/contactsAll',[ContactController::class, 'getContactsAll']);
+
 Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
 
 Route::post('/contact', [ContactController::class, 'createContact']);

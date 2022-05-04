@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,17 +24,44 @@ class ContactController extends Controller
 
         // $user = User::all(); //traer a todos los usuarios-ç.
         return $contacts;
+    }
 
+    public function getContactsAll()
+    {
+        //$contact = Contact::all();
+        $contact = Contact::where('user_id', 7)->get()->toArray();
+
+        if(empty($contact)){
+            return response()->json(
+                [
+                    "succes" => "There are not contacts"
+                ], 202
+            );
+        };
+        
+        return response()->json($contact, 200);
     }
 
     public function getContactById($id)
     {
         
-        $contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->get();  //sacar los contactos que a creado ese usuario(user_id, quien este logeado, con un token)
+        //$contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->get();  //sacar los contactos que a creado ese usuario(user_id, quien este logeado, con un token)
         //$contact = DB::table('contacts')->where('user_id', 1)->find($id);    nos devuelve lo mismo.
-        
+
+        $contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->first();
+        //$contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->firstOrFail(); 
+
+        if(empty($contact)){
+            return response()->json(
+                [
+                    "error" => "Contact not exists"
+                ],400
+            );
+        };
         //return 'GET CONTACT BY ID->'. $id;
-        return $contact;
+        //return $contact;
+        return response()->json($contact, 200);
+
     }
 
     public function createContact(Request $request)
