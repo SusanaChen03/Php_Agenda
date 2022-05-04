@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('surname', 100);
             $table->string('phone_number');
             $table->string('email')->unique();          //hacer que el email sea unico en la agenda
-            $table->unsignedBigInteger('user_id');       //unsignedBigInteger la misma clase que la BD, user_id, tiene que ser el mismo que la foreig key
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');     //setNull/cascade set null es queuna vez borrado quede null
+            $table->unsignedBigInteger('user_id');      //NULLABLE //unsignedBigInteger la misma clase que la BD, user_id, tiene que ser el mismo que la foreig key
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');   //SETNULL  //setNull/cascade set null es queuna vez borrado quede null
             $table->timestamps();
         });
     }
