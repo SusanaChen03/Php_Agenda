@@ -21,6 +21,7 @@ class ContactController extends Controller
 
         //return 'GET ALL CONTACTS CONTROLLER';  //console.log get all contacts controller.
 
+        // $user = User::all(); //traer a todos los usuarios-ç.
         return $contacts;
 
     }
