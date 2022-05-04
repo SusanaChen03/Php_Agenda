@@ -12,9 +12,17 @@ class ContactController extends Controller
         $contacts = DB::table('contacts')->where('user_id',1)->get()->toArray();//get nos trae una coleccion y toArray nos lo convierte en array
         //where para barreras para entrar where('user', 'LIKE'(que contenga 1)'='(que sea igual a 1))
         dump($contacts);
+        // $contacts = DB::table('contacts')->select('name', 'surname')->where('user_id',1)->get()->toArray()   //más filtros
+
+        // $contacts = DB::table('contacts')
+        //->select('name', 'surname as apellido')
+        //->where('user_id',1)->get()
+        //->toArray()   //sustituye surname por apellido
 
         //return 'GET ALL CONTACTS CONTROLLER';  //console.log get all contacts controller.
+
         return $contacts;
+
     }
 
     public function getContactById($id)
@@ -29,6 +37,7 @@ class ContactController extends Controller
 
     public function createContact(Request $request)
     {
+      
         return 'CREATE CONTACT BY ID';
     }
 
