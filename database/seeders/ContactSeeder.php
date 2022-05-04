@@ -25,5 +25,15 @@ class ContactSeeder extends Seeder
             'user_id'=> 1
             ]
             );
+            
+        DB::table('contacts')->insert(
+            [
+            'name'=>'Ana',
+            'surname'=>'García',
+            'email'=>'ana@ana.com',
+            'phone_number'=>'22255566',
+            'user_id'=> 2
+            ]
+            );
     }
 };

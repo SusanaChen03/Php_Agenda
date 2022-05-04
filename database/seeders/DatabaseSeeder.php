@@ -14,10 +14,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         //\App\Models\User::factory(10)->create();
+         \App\Models\User::factory(10)->create();
 
          $this->call([
              ContactSeeder::class   //trae el array de datos de contact 
-         ]);
+            //aqui se suma los seeders que hemos creado (ej. notas)
+            //NoteSeeder::class
+       ]);
     }
 }
