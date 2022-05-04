@@ -29,12 +29,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-Route::get('/contacts',[ContactController::class,'getAllContacts']);
-
-
-Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
-
-
 
 // Route::post('/contact', function (Request $request) {
 //     dump($request-> all()['name']);    //pasa el post en un array  //dump hay que borrarlas en produccion //name: accediendo a la propiedad  
@@ -43,6 +37,10 @@ Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
  
 //     return 'CREATE CONTACT BY ID';
 // });
+
+Route::get('/contacts',[ContactController::class,'getAllContacts']);
+
+Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
 
 Route::post('/contact', [ContactController::class, 'createContact']);
 
