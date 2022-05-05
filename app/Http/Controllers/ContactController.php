@@ -118,7 +118,7 @@ class ContactController extends Controller
         // $newContact->user_id=$request->user_id;                         
         // $newContact->save();
 
-        //以下 creamos con el metodo create.
+        //以下 creamos con el metodo create. tenemos que ir al Modelo contact y meter el protected
         $contact = $request->all();
         $newContact = Contact::create($contact);
 
