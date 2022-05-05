@@ -12,7 +12,9 @@ class ContactController extends Controller
 {
     public function getAllContacts()
     {
-        $contacts = DB::table('contacts')->where('user_id',1)->get()->toArray();//get nos trae una coleccion y toArray nos lo convierte en array
+        $userId = auth()->user()->id;
+
+        $contacts = DB::table('contacts')->where('user_id',$userId)->get()->toArray();//get nos trae una coleccion y toArray nos lo convierte en array
         //where para barreras para entrar where('user', 'LIKE'(que contenga 1)'='(que sea igual a 1))
         //dump($contacts);
         // $contacts = DB::table('contacts')->select('name', 'surname')->where('user_id',1)->get()->toArray()   //más filtros
@@ -34,8 +36,10 @@ class ContactController extends Controller
         try {
 
             Log::info('Init get all contacts');
-                   
-            $contact = Contact::where('user_id', 7)->get()->toArray();
+            
+            $userId = auth()->user()->id;
+
+            $contact = Contact::where('user_id', $userId)->get()->toArray();
             if(empty($contact)){
                 return response()->json(
                     [
@@ -64,7 +68,10 @@ class ContactController extends Controller
         //$contact = DB::table('contacts')->where('user_id', 1)->find($id);    nos devuelve lo mismo.
         Log::info('Init get all contacts by Id');
 
-        $contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->first();
+        $userId = auth()->user()->id;
+        
+
+        $contact = DB::table('contacts')->where('user_id',$userId)->where('user_id',$id)->first();
         //$contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->firstOrFail(); 
 
         if(empty($contact)){
@@ -106,21 +113,21 @@ class ContactController extends Controller
         };
 
         //以下 instaciamos y creamos el usuario
-        //$newContact = new Contact();  //instanciamos el modelo
+        $newContact = new Contact();  //instanciamos el modelo
 
-        //$userId = auth()->user()->id;
+        $userId = auth()->user()->id;
 
-        // $newContact->name = $request->name;
-        // $newContact->surname=$request->surname;
-        // $newContact->email=$request->email;
-        // $newContact->phone_number=$request->phone_number;
-        // //$newContact->user_id=$userId;                           //mala practica, es solo para practicar, no se pone
-        // $newContact->user_id=$request->user_id;                         
-        // $newContact->save();
+        $newContact->name = $request->name;
+        $newContact->surname=$request->surname;
+        $newContact->email=$request->email;
+        $newContact->phone_number=$request->phone_number;
+        $newContact->user_id=$userId;                                       
+        
+        $newContact->save();
 
         //以下 creamos con el metodo create. tenemos que ir al Modelo contact y meter el protected
-        $contact = $request->all();
-        $newContact = Contact::create($contact);
+        // $contact = $request->all();
+        // $newContact = Contact::create($contact);
 
         //return 'CREATE CONTACT BY ID';
         return response()->json(["data"=>$newContact, "success"=>'Contact created'], 200);
@@ -138,7 +145,8 @@ class ContactController extends Controller
     public function patchContactById(Request $request, $id)
     {
      try {
-        Log::info('Edit contacts');
+        Log::info('Edit contacts');        
+        $userId = auth()->user()->id;
 
         $validator = Validator::make($request->all(), [   //validaciones, campo requerido
             'name' => 'string|max:100',
@@ -152,7 +160,7 @@ class ContactController extends Controller
         };
 
          
-        $contact = Contact::where('user_id',$id)->where('user_id',1)->first();
+        $contact = Contact::where('user_id',$id)->where('user_id',$userId)->first();
 
         if(empty($contact)){
             return response()->json(["error"=> "contact not exists"], 404);
@@ -196,8 +204,10 @@ class ContactController extends Controller
     {
        try {
         Log::info('delete contacts');
+        $userId = auth()->user()->id;
 
-        $contact = Contact::where('user_id',$id)->where('user_id',1)->first();
+
+        $contact = Contact::where('user_id',$id)->where('user_id',$userId)->first();
         
         if(empty($contact)){
             return response()->json(["error"=> "contact not exists"], 404);
