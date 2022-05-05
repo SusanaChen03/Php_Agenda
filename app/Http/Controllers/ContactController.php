@@ -62,6 +62,7 @@ class ContactController extends Controller
         try {
                //$contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->get();  //sacar los contactos que a creado ese usuario(user_id, quien este logeado, con un token)
         //$contact = DB::table('contacts')->where('user_id', 1)->find($id);    nos devuelve lo mismo.
+        Log::info('Init get all contacts by Id');
 
         $contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->first();
         //$contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->firstOrFail(); 
@@ -90,6 +91,8 @@ class ContactController extends Controller
     public function createContact(Request $request)
     {
        try {
+        Log::info('Init create contacts');
+
         $validator = Validator::make($request->all(), [   //validaciones, campo requerido
             'name' => 'required|string',
             'surname' => 'required|string',
@@ -120,18 +123,31 @@ class ContactController extends Controller
         return response()->json(["data"=>$newContact, "success"=>'Contact created'], 200);
        } catch (\Throwable $th) {
 
-        Log::error('Ha ocurrido un error->'.$th->getMessage());
+            Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-        dd($th->getMessage());              //solo sale el mensaje de error
+            dd($th->getMessage());              //solo sale el mensaje de error
 
-        return response()->json([ 'error'=> 'upssss!'], 500);
-    }
+            return response()->json([ 'error'=> 'upssss!'], 500);
+        }
 
     }
 
     public function patchContactById(Request $request, $id)
     {
      try {
+        Log::info('Edit contacts');
+
+        $validator = Validator::make($request->all(), [   //validaciones, campo requerido
+            'name' => 'string|max:100',
+            'surname' => 'string!|max:100',
+            'phone_number' => 'string',
+            'email' => 'email',
+        ]);
+ 
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        };
+
          
         $contact = Contact::where('user_id',$id)->where('user_id',1)->first();
 
@@ -160,14 +176,15 @@ class ContactController extends Controller
         //return 'UPDATE CONTACT BY ID'. $id;
         //return ["data"=>$contact, "success"=>'Contact updated'];
         return response()->json(["data"=>$contact, "success"=>'Contact updated'], 200);
-     } catch (\Throwable $th) {
 
-        Log::error('Ha ocurrido un error->'.$th->getMessage());
+        } catch (\Throwable $th) {
 
-        dd($th->getMessage());              //solo sale el mensaje de error
+            Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-        return response()->json([ 'error'=> 'upssss!'], 500);
-    }
+            dd($th->getMessage());              //solo sale el mensaje de error
+
+            return response()->json([ 'error'=> 'upssss!'], 500);
+        }
 
     }
 
@@ -175,6 +192,8 @@ class ContactController extends Controller
     public function deleteContactById($id)
     {
        try {
+        Log::info('delete contacts');
+
         $contact = Contact::where('user_id',$id)->where('user_id',1)->first();
         
         if(empty($contact)){
@@ -191,6 +210,6 @@ class ContactController extends Controller
         dd($th->getMessage());              //solo sale el mensaje de error
 
         return response()->json([ 'error'=> 'upssss!'], 500);
-    }
+        }
     }
 }
