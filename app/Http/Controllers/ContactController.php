@@ -14,7 +14,7 @@ class ContactController extends Controller
     {
         $contacts = DB::table('contacts')->where('user_id',1)->get()->toArray();//get nos trae una coleccion y toArray nos lo convierte en array
         //where para barreras para entrar where('user', 'LIKE'(que contenga 1)'='(que sea igual a 1))
-        dump($contacts);
+        //dump($contacts);
         // $contacts = DB::table('contacts')->select('name', 'surname')->where('user_id',1)->get()->toArray()   //más filtros
 
         // $contacts = DB::table('contacts')
@@ -51,7 +51,7 @@ class ContactController extends Controller
 
             Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-            dd($th->getMessage());              //solo sale el mensaje de error
+            //dd($th->getMessage());              //solo sale el mensaje de error
 
             return response()->json([ 'error'=> 'upssss!'], 500);  //lo que vera el front o el cliente
         }
@@ -81,7 +81,7 @@ class ContactController extends Controller
 
             Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-            dd($th->getMessage());              //solo sale el mensaje de error
+            //dd($th->getMessage());              //solo sale el mensaje de error
 
             return response()->json([ 'error'=> 'upssss!'], 500);
         }
@@ -128,7 +128,7 @@ class ContactController extends Controller
 
             Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-            dd($th->getMessage());              //solo sale el mensaje de error
+            //dd($th->getMessage());              //solo sale el mensaje de error
 
             return response()->json([ 'error'=> 'upssss!'], 500);
         }
@@ -184,7 +184,7 @@ class ContactController extends Controller
 
             Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-            dd($th->getMessage());              //solo sale el mensaje de error
+            //dd($th->getMessage());              //solo sale el mensaje de error
 
             return response()->json([ 'error'=> 'upssss!'], 500);
         }
@@ -210,7 +210,7 @@ class ContactController extends Controller
 
         Log::error('Ha ocurrido un error->'.$th->getMessage());
 
-        dd($th->getMessage());              //solo sale el mensaje de error
+        //dd($th->getMessage());              //solo sale el mensaje de error
 
         return response()->json([ 'error'=> 'upssss!'], 500);
         }
