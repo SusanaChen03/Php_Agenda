@@ -194,6 +194,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        //antes hay que ejecutar 
+        //php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider" 
+        //en la terminal
+        //config JWT 
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 
