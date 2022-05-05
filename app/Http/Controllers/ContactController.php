@@ -53,7 +53,7 @@ class ContactController extends Controller
 
             dd($th->getMessage());              //solo sale el mensaje de error
 
-            return response()->json([ 'error'=> 'upssss!'], 500);
+            return response()->json([ 'error'=> 'upssss!'], 500);  //lo que vera el front o el cliente
         }
     }
 
@@ -105,19 +105,22 @@ class ContactController extends Controller
             return response()->json($validator->errors(), 400);
         };
 
-
-        $newContact = new Contact();  //instanciamos el modelo
+        //以下 instaciamos y creamos el usuario
+        //$newContact = new Contact();  //instanciamos el modelo
 
         //$userId = auth()->user()->id;
 
-        $newContact->name = $request->name;
-        $newContact->surname=$request->surname;
-        $newContact->email=$request->email;
-        $newContact->phone_number=$request->phone_number;
-        //$newContact->user_id=$userId;                           //mala practica, es solo para practicar, no se pone
-        $newContact->user_id=$request->user_id;                         
+        // $newContact->name = $request->name;
+        // $newContact->surname=$request->surname;
+        // $newContact->email=$request->email;
+        // $newContact->phone_number=$request->phone_number;
+        // //$newContact->user_id=$userId;                           //mala practica, es solo para practicar, no se pone
+        // $newContact->user_id=$request->user_id;                         
+        // $newContact->save();
 
-        $newContact->save();
+        //以下 creamos con el metodo create.
+        $contact = $request->all();
+        $newContact = Contact::create($contact);
 
         //return 'CREATE CONTACT BY ID';
         return response()->json(["data"=>$newContact, "success"=>'Contact created'], 200);

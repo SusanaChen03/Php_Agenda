@@ -9,6 +9,14 @@ class Contact extends Model
 {
     use HasFactory;
 
+    protected $fillable = [    //para usar el metodo create en el post
+        'name',
+        'surname',
+        'phone_number',
+        'email',
+        'user_id'
+    ];
+
     //protected $table = 'contacts';      //cuando el nombre de la tabla no esta con el mismo nombre en singular.
     //protected $primaryKey = 'Flight_id';   //cuando no es el id por defecto
     //public $timestamp = false; //no se actualiza estos campos
