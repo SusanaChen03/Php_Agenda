@@ -15,7 +15,21 @@ class IsUserActive
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        return $next($request);
+    {   
+        $isUserActive = auth()->user()->is_active;
+
+        if($isUserActive)
+        {
+            return $next($request);
+        }
+        return response()->json('el usuario no ha activado la cuenta', 400);
+
+        // if($request->is_admin === 'true')
+        // {
+        // return $next($request);
+        // }
+        // return response()->json('No estás autorizado', 401);
     }
+    //     return $next($request);
+    // }
 }

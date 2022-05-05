@@ -39,11 +39,11 @@ Route::group([
 
 
 Route::group([
-    'middleware' => 'jwt.auth'
+    'middleware' => 'jwt.auth'    // 'middleware' => ['jwt.auth','isUserActive'];
 ], function () {
     Route::get('/contacts',[ContactController::class,'getAllContacts']);
 
-    Route::get('/contactsAll',[ContactController::class, 'getContactsAll']);
+    Route::get('/contactsAll',[ContactController::class, 'getContactsAll'])->middleware('isUserActive');
 
     Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
 
