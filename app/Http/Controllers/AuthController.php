@@ -65,4 +65,37 @@ class AuthController extends Controller
             return response()->json(['error=> "Error login user'], 500);
         }
     }
+
+    public function profile()                   //profile del usuario con autenticacion 
+    {
+
+        try {
+            return response()->json(auth()->user());
+        } catch (\Throwable $th) {
+            return response()->json(['error=> error profile'],500);
+        }
+    }
+
+    public function logout(Request $request)    //esto se hace por body "token":""
+    {
+        
+        $this->validate($request, [
+            'token' => 'required'
+            ]);
+
+            try {
+                JWTAuth::invalidate($request->token);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User logged out successfully'
+                ]);
+            } catch (\Exception $exception) {
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sorry, the user cannot be logged out'
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+    }
 }
