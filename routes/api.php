@@ -54,13 +54,22 @@ Route::group([
 
 //USER
 Route::group([
-    'middleware' => 'jwt.auth'    
+    'middleware' => ['jwt.auth', 'isSuperAdmin']
 ], function () {
-   Route::get('/user-by-contact-id/{id}', [UserController::class, 'getUserByContactId']);
+   Route::post('/create-user-admin/{id}', [UserController::class, 'createUserAdmin']);
+    Route::delete('/destroy-user-admin/{id}', [UserController::class, 'destroyUserAdmin']);
 });
 
-Route::post('/create-user-admin/{id}', [UserController::class, 'createUserAdmin']);
-Route::delete('/destroy-user-admin/{id}', [UserController::class, 'destroyUserAdmin']);
+//USER
+Route::group([
+    'middleware' => 'jwt.auth'
+], function () {
+   Route::get('/user-by-contact-id/{id}', [UserController::class, 'getUserByContactId']);
+  
+});
+
+
+
 
 // Route::get('/contacts', function(Request $request) {   //localhost:8000/api/contacts/author=daniel  te devuelve daniel
 //     dump($request->query('author'));  //las querys se utilizan para los filtros
