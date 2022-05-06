@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,8 @@ Route::group([
    Route::get('/user-by-contact-id/{id}', [UserController::class, 'getUserByContactId']);
 });
 
+Route::post('/create-user-admin/{id}', [UserController::class, 'createUserAdmin']);
+Route::delete('/destroy-user-admin/{id}', [UserController::class, 'destroyUserAdmin']);
 
 // Route::get('/contacts', function(Request $request) {   //localhost:8000/api/contacts/author=daniel  te devuelve daniel
 //     dump($request->query('author'));  //las querys se utilizan para los filtros
