@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -39,7 +40,14 @@ class ContactController extends Controller
             
             $userId = auth()->user()->id;
 
-            $contact = Contact::where('user_id', $userId)->get()->toArray();
+            // $contact = Contact::find(1)->user();
+
+            //$contact = Contact::where('user_id', $userId)->get()->toArray();
+            //上下一样 trae la coleccion de usuarios con el userId y sus contactos.
+            $contact = User::find($userId)->contacts;   //en base a modelo user, recuperar los usuarios del contacto
+            
+            
+
             if(empty($contact)){
                 return response()->json(
                     [
@@ -70,7 +78,7 @@ class ContactController extends Controller
 
         $userId = auth()->user()->id;
         
-
+        // 以下 autentificarlo para que solo salga lo de su id
         $contact = DB::table('contacts')->where('user_id',$userId)->where('user_id',$id)->first();
         //$contact = DB::table('contacts')->where('user_id',1)->where('user_id',$id)->firstOrFail(); 
 

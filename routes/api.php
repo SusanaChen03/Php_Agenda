@@ -42,17 +42,23 @@ Route::group([
     'middleware' => 'jwt.auth'    // 'middleware' => ['jwt.auth','isUserActive'];
 ], function () {
     Route::get('/contacts',[ContactController::class,'getAllContacts']);
-
     Route::get('/contactsAll',[ContactController::class, 'getContactsAll'])->middleware('isUserActive');
-
     Route::get('/contact/{id}', [ContactController::class, 'getContactById']);
-
     Route::post('/contact', [ContactController::class, 'createContact']);
-
     Route::patch('/contact/{id}', [ContactController::class, 'patchContactById']);
-
     Route::delete('/contact/{id}', [ContactController::class, 'deleteContactById']);
 });
+
+
+
+//USER
+Route::group([
+    'middleware' => 'jwt.auth'    
+], function () {
+   Route::get('/user-by-contact-id/{id}', [UserController::class, 'getUserByContactId']);
+});
+
+
 // Route::get('/contacts', function(Request $request) {   //localhost:8000/api/contacts/author=daniel  te devuelve daniel
 //     dump($request->query('author'));  //las querys se utilizan para los filtros
 //     return 'GET ALL CONTACTS';

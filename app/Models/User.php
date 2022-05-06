@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -56,6 +56,12 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
     return [];
+    }
+
+    //relation one to many
+    public function contacts()  //relacion uno a mucho de usuarios a contacto
+    {
+        return $this->hasMany(Contact::class);  //un usuario(donde estoy) puede tener hasMany contactos
     }
 
 };
