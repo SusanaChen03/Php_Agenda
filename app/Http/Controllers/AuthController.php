@@ -12,6 +12,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    const ROLE_USER_ID = 1;
+
     public function register(Request $request)    //registro con JWT
     {
         Log::info('Init register');
@@ -31,6 +33,9 @@ class AuthController extends Controller
                 'email' => $request->get('email'),
                 'password' => bcrypt($request->password)
             ]);
+
+            $user->roles()->attach(self::ROLE_USER_ID);   //REGISTRO CON ROLE
+
             $token = JWTAuth::fromUser($user);   //recupera los datos del usuario y nos lo encripta a la $token
     
             return response()->json(compact('user','token'),201);
