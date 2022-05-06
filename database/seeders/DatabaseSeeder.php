@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
              ContactSeeder::class   //trae el array de datos de contact 
             //aqui se suma los seeders que hemos creado (ej. notas)
             //NoteSeeder::class
+
+            //php artisan db:seed RoleSeeder, lo de antes ya esta ejecutado, y o tira mas seeders.
        ]);
     }
 }
